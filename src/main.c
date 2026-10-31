@@ -1,3 +1,5 @@
+#include "../include/add.h"
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 
@@ -69,7 +71,7 @@ void stop_app(int sig){
 	close(sockfd);
 }
 
-void pthread_close(pthread_t *thread_IDs, int thread_number){
+void thread_close(pthread_t *thread_IDs, int thread_number){
 	for(int i = 0; i < thread_number; i++){
 		pthread_join(thread_IDs[i], NULL);
 	}
@@ -114,6 +116,8 @@ void *handler_task(void *arg_)
 
 int main(void)
 {
+	printf("2 + 3 = %d\n", add(2, 3));
+
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGINT, stop_app);
 
@@ -164,7 +168,7 @@ int main(void)
 
 	// pthread_close;
 	// TODO: bütün thread'lere join ol
-	pthread_close(thread_IDs, thread_number);
+	thread_close(thread_IDs, thread_number);
 
 	return 0;
 }
